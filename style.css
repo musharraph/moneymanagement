@@ -23,6 +23,31 @@ body {
     color: var(--text-color);
 }
 
+/* Buttons */
+button {
+    background: var(--highlight);
+    color: white;
+    border: none;
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #e68900;
+}
+
+/* Dropdown */
+.step__suggestions {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
 /* Password Popup */
 .password-popup {
     position: fixed;
@@ -33,37 +58,6 @@ body {
     justify-content: center;
     align-items: center;
     backdrop-filter: blur(10px);
-    transition: opacity 0.5s ease-in-out;
-}
-
-.popup-box {
-    background: var(--card-bg);
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2);
-}
-
-.popup-box input {
-    width: 80%;
-    padding: 8px;
-    margin: 10px 0;
-    border-radius: 5px;
-    outline: none;
-}
-
-.popup-box button {
-    padding: 10px;
-    background: var(--highlight);
-    border: none;
-    color: white;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-.popup-box p {
-    color: red;
-    font-size: 14px;
 }
 
 .password-popup.hide {
@@ -81,42 +75,4 @@ body {
 .outer__wrapper.show {
     display: block;
     opacity: 1;
-}
-
-/* Card */
-.card__wrapper {
-    background: var(--card-bg);
-    padding: 25px;
-    width: 350px;
-    border-radius: 15px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2);
-    text-align: center;
-}
-
-/* Logo */
-.site-logo {
-    width: 80px;
-    margin-bottom: 10px;
-}
-
-/* Steps Bubble */
-.step-bubble {
-    background: var(--highlight);
-    padding: 8px 12px;
-    border-radius: 15px;
-    font-weight: bold;
-    color: #fff;
-    box-shadow: 0px 0px 5px rgba(255, 152, 0, 0.5);
-    transition: transform 0.3s;
-}
-
-.step-bubble:hover {
-    transform: scale(1.1);
-}
-
-.total, .profit {
-    font-size: 16px;
-    margin-top: 10px;
-    font-weight: 500;
 }

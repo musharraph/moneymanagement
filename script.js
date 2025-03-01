@@ -16,29 +16,35 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Unlock with "Enter" key
     passwordInput.addEventListener("keypress", (event) => {
         if (event.key === "Enter") {
             submitPassword.click();
         }
     });
 
-    // Functionality for money calculations
     const invEntry = document.querySelector(".inv__entry");
     const stepsEntry = document.querySelector(".steps__entry");
     const percentageEntry = document.querySelector(".percentage__entry");
+    const stepSuggestions = document.querySelector(".step__suggestions");
     const resultVals = document.querySelector(".result__vals");
     const totalInvestment = document.querySelector(".total");
     const profitPerSession = document.querySelector(".profit");
+    const generateStepsBtn = document.querySelector("#generate-steps");
+    const resetBtn = document.querySelector("#reset-values");
 
     const calculateInvestment = () => {
         let inv = Number(invEntry.value);
         let steps = Number(stepsEntry.value);
         let percentage = Number(percentageEntry.value) / 100;
-        
+
+        if (steps > 100) {
+            stepsEntry.value = 100;
+            steps = 100;
+        }
+
         resultVals.innerHTML = "";
         let values = [];
-        
+
         for (let i = 0; i < steps; i++) {
             let formula = inv * (1 + (1 / percentage)) ** i;
             values.push(Math.round(formula));
@@ -55,8 +61,18 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    [invEntry, stepsEntry, percentageEntry].forEach(input => {
-        input.addEventListener("input", calculateInvestment);
+    generateStepsBtn.addEventListener("click", calculateInvestment);
+    resetBtn.addEventListener("click", () => {
+        invEntry.value = "1";
+        stepsEntry.value = "5";
+        percentageEntry.value = "85";
+        resultVals.innerHTML = "";
+        totalInvestment.innerHTML = "";
+        profitPerSession.innerHTML = "";
+    });
+
+    stepSuggestions.addEventListener("change", () => {
+        stepsEntry.value = stepSuggestions.value;
     });
 
     calculateInvestment();
