@@ -1,4 +1,29 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const passwordPopup = document.querySelector(".password-popup");
+    const passwordInput = document.querySelector("#password-input");
+    const submitPassword = document.querySelector("#submit-password");
+    const errorMessage = document.querySelector("#error-message");
+    const outerWrapper = document.querySelector(".outer__wrapper");
+
+    const correctPassword = "1234";  // Set your password here
+
+    submitPassword.addEventListener("click", () => {
+        if (passwordInput.value === correctPassword) {
+            passwordPopup.classList.add("hide");
+            outerWrapper.classList.add("show");
+        } else {
+            errorMessage.textContent = "Incorrect password! Try again.";
+        }
+    });
+
+    // Unlock with "Enter" key
+    passwordInput.addEventListener("keypress", (event) => {
+        if (event.key === "Enter") {
+            submitPassword.click();
+        }
+    });
+
+    // Functionality for money calculations
     const invEntry = document.querySelector(".inv__entry");
     const stepsEntry = document.querySelector(".steps__entry");
     const percentageEntry = document.querySelector(".percentage__entry");
