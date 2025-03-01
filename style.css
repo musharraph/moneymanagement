@@ -32,36 +32,51 @@ body {
     backdrop-filter: blur(10px);
 }
 
-.hidden {
-    display: none;
-}
-
-.visible {
-    display: flex;
+/* Logo Styling */
+.popup-logo, .site-logo {
+    width: 80px;
+    display: block;
+    margin: 0 auto 15px;
 }
 
 /* Card */
 .card {
     background: rgba(255, 255, 255, 0.1);
-    padding: 25px;
+    padding: 20px;
     border-radius: 15px;
     backdrop-filter: blur(10px);
     text-align: center;
+    width: 350px;
 }
 
-.button-group button {
+/* Input & Button Styling */
+input, select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: none;
+}
+
+button {
     background: #ff9800;
     color: white;
     border: none;
     padding: 10px;
-    margin: 5px;
     cursor: pointer;
     border-radius: 5px;
 }
 
+button:hover {
+    background: #e68900;
+}
+
+/* Step Bubbles */
 .step-bubble {
     background: #ff9800;
     padding: 8px 12px;
     border-radius: 15px;
-    color: #fff;
+    color: white;
+    display: inline-block;
+    margin: 3px;
 }
