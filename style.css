@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+:root {
+    --bg-color: #121212;
+    --card-bg: rgba(255, 255, 255, 0.1);
+    --text-color: #fff;
+    --highlight: #ff9800;
+}
+
+body {
+    background: linear-gradient(135deg, #1e1e2f, #252547);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: var(--text-color);
+}
+
+.card__wrapper {
+    background: var(--card-bg);
+    padding: 25px;
+    width: 350px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2);
+    text-align: center;
+}
+
+.title {
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--highlight);
+}
+
+.sub__title {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.input__group {
+    margin: 15px 0;
+    text-align: left;
+}
+
+.input__group label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.input__group input {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--text-color);
+    transition: 0.3s;
+}
+
+.input__group input:focus {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.result__container {
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.result__vals {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+}
+
+.step-bubble {
+    background: var(--highlight);
+    padding: 8px 12px;
+    border-radius: 15px;
+    font-weight: bold;
+    color: #fff;
+    box-shadow: 0px 0px 5px rgba(255, 152, 0, 0.5);
+    transition: transform 0.3s;
+}
+
+.step-bubble:hover {
+    transform: scale(1.1);
+}
+
+.total, .profit {
+    font-size: 16px;
+    margin-top: 10px;
+    font-weight: 500;
+}
+
+@media (min-width: 500px) {
+    .card__wrapper {
+        width: 400px;
+    }
+}
