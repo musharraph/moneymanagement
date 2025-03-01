@@ -2,68 +2,67 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Money Manager</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Password Popup -->
-    <div class="password-popup">
-        <div class="popup-box">
-            <img src="logo.png" alt="Logo" class="popup-logo">
+    <div class="password-modal">
+        <div class="password-modal-content">
+            <img src="logo.png" alt="Logo" class="modal-logo">
             <h2>Enter Password</h2>
-            <input type="password" id="password-input" placeholder="Enter Password">
-            <button id="unlock-btn">Unlock</button>
-            <p id="error-msg"></p>
+            <input type="password" id="password" placeholder="Enter Password">
+            <button id="unlock">Unlock</button>
+            <p id="password-error" class="error-message"></p>
         </div>
     </div>
 
-    <!-- Main Content -->
-    <div class="main-container">
-        <div class="card">
-            <img src="logo.png" alt="Logo" class="site-logo">
+    <main class="main-container hidden">
+        <div class="calculator-card">
+            <img src="logo.png" alt="Logo" class="app-logo">
             <h1>Money Management</h1>
 
-            <div class="input-group">
-                <label>First Step ($):</label>
-                <input type="number" id="initial-investment" value="1">
-            </div>
+            <form id="calculator-form">
+                <div class="form-group">
+                    <label for="initial-investment">First Step ($):</label>
+                    <input type="number" id="initial-investment" value="1">
+                </div>
 
-            <div class="input-group">
-                <label>Steps (Max: 100):</label>
-                <input type="number" id="step-count" value="5" min="1" max="100">
-            </div>
+                <div class="form-group">
+                    <label for="step-count">Steps (Max: 100):</label>
+                    <input type="number" id="step-count" value="5" min="1" max="100">
+                </div>
 
-            <div class="input-group">
-                <label>Suggested Steps:</label>
-                <select id="step-suggestions">
-                    <option value="5">Beginner (5 Steps)</option>
-                    <option value="10">Intermediate (10 Steps)</option>
-                    <option value="20">Advanced (20 Steps)</option>
-                    <option value="50">Expert (50 Steps)</option>
-                    <option value="100">Max (100 Steps)</option>
-                </select>
-            </div>
+                <div class="form-group">
+                    <label for="step-suggestions">Suggested Steps:</label>
+                    <select id="step-suggestions">
+                        <option value="5">Beginner (5 Steps)</option>
+                        <option value="10">Intermediate (10 Steps)</option>
+                        <option value="20">Advanced (20 Steps)</option>
+                        <option value="50">Expert (50 Steps)</option>
+                        <option value="100">Max (100 Steps)</option>
+                    </select>
+                </div>
 
-            <div class="input-group">
-                <label>Percentage (%):</label>
-                <input type="number" id="percentage" value="85">
-            </div>
+                <div class="form-group">
+                    <label for="percentage">Percentage (%):</label>
+                    <input type="number" id="percentage" value="85">
+                </div>
 
-            <div class="button-group">
-                <button id="calculate-btn">Generate Steps</button>
-                <button id="reset-btn">Reset</button>
-            </div>
+                <div class="form-actions">
+                    <button type="button" id="calculate">Generate Steps</button>
+                    <button type="reset" id="reset">Reset</button>
+                </div>
+            </form>
 
-            <div class="result-container">
+            <div class="result-section">
                 <h3>Possible Steps:</h3>
-                <div id="result-steps"></div>
+                <div id="step-results" class="step-results"></div>
                 <p id="total-investment"></p>
                 <p id="estimated-profit"></p>
             </div>
         </div>
-    </div>
+    </main>
 
     <script src="script.js"></script>
 </body>
