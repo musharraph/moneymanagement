@@ -1,79 +1,79 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // Password Authentication
     const passwordPopup = document.querySelector(".password-popup");
     const passwordInput = document.querySelector("#password-input");
-    const submitPassword = document.querySelector("#submit-password");
-    const errorMessage = document.querySelector("#error-message");
-    const outerWrapper = document.querySelector(".outer__wrapper");
+    const unlockBtn = document.querySelector("#unlock-btn");
+    const errorMsg = document.querySelector("#error-msg");
+    const mainContainer = document.querySelector(".main-container");
 
-    const correctPassword = "1234";  // Set your password here
+    const PASSWORD = "1234";  // Change this to set your own password
 
-    submitPassword.addEventListener("click", () => {
-        if (passwordInput.value === correctPassword) {
-            passwordPopup.classList.add("hide");
-            outerWrapper.classList.add("show");
+    unlockBtn.addEventListener("click", () => {
+        if (passwordInput.value === PASSWORD) {
+            passwordPopup.classList.add("hidden");
+            mainContainer.classList.add("visible");
         } else {
-            errorMessage.textContent = "Incorrect password! Try again.";
+            errorMsg.textContent = "Incorrect password. Try again.";
         }
     });
 
     passwordInput.addEventListener("keypress", (event) => {
-        if (event.key === "Enter") {
-            submitPassword.click();
-        }
+        if (event.key === "Enter") unlockBtn.click();
     });
 
-    const invEntry = document.querySelector(".inv__entry");
-    const stepsEntry = document.querySelector(".steps__entry");
-    const percentageEntry = document.querySelector(".percentage__entry");
-    const stepSuggestions = document.querySelector(".step__suggestions");
-    const resultVals = document.querySelector(".result__vals");
-    const totalInvestment = document.querySelector(".total");
-    const profitPerSession = document.querySelector(".profit");
-    const generateStepsBtn = document.querySelector("#generate-steps");
-    const resetBtn = document.querySelector("#reset-values");
+    // Step Calculation
+    const invInput = document.querySelector("#initial-investment");
+    const stepInput = document.querySelector("#step-count");
+    const percentageInput = document.querySelector("#percentage");
+    const stepSuggestions = document.querySelector("#step-suggestions");
+    const resultSteps = document.querySelector("#result-steps");
+    const totalInvestment = document.querySelector("#total-investment");
+    const estimatedProfit = document.querySelector("#estimated-profit");
+    const calculateBtn = document.querySelector("#calculate-btn");
+    const resetBtn = document.querySelector("#reset-btn");
 
-    const calculateInvestment = () => {
-        let inv = Number(invEntry.value);
-        let steps = Number(stepsEntry.value);
-        let percentage = Number(percentageEntry.value) / 100;
+    const generateSteps = () => {
+        let inv = Number(invInput.value);
+        let steps = Number(stepInput.value);
+        let percentage = Number(percentageInput.value) / 100;
 
         if (steps > 100) {
-            stepsEntry.value = 100;
+            stepInput.value = 100;
             steps = 100;
         }
 
-        resultVals.innerHTML = "";
+        resultSteps.innerHTML = "";
         let values = [];
 
         for (let i = 0; i < steps; i++) {
-            let formula = inv * (1 + (1 / percentage)) ** i;
-            values.push(Math.round(formula));
+            let amount = inv * (1 + (1 / percentage)) ** i;
+            values.push(Math.round(amount));
         }
 
-        totalInvestment.innerHTML = `💰 Total Investment: <strong>$${values.reduce((a, b) => a + b, 0)}</strong>`;
-        profitPerSession.innerHTML = `📈 Approx. Profit/Session: <strong>$${(inv * percentage).toFixed(2)}</strong>`;
+        totalInvestment.innerHTML = ` Total Investment: <strong>$${values.reduce((a, b) => a + b, 0)}</strong>`;
+        estimatedProfit.innerHTML = ` Estimated Profit: <strong>$${(inv * percentage).toFixed(2)}</strong>`;
 
-        values.forEach(val => {
-            let span = document.createElement("span");
-            span.classList.add("step-bubble");
-            span.textContent = val;
-            resultVals.appendChild(span);
+        values.forEach(value => {
+            let stepBubble = document.createElement("span");
+            stepBubble.classList.add("step-bubble");
+            stepBubble.textContent = value;
+            resultSteps.appendChild(stepBubble);
         });
     };
 
-    generateStepsBtn.addEventListener("click", calculateInvestment);
-    resetBtn.addEventListener("click", () => {
-        invEntry.value = "1";
-        stepsEntry.value = "5";
-        percentageEntry.value = "85";
-        resultVals.innerHTML = "";
-        totalInvestment.innerHTML = "";
-        profitPerSession.innerHTML = "";
-    });
-
     stepSuggestions.addEventListener("change", () => {
-        stepsEntry.value = stepSuggestions.value;
+        stepInput.value = stepSuggestions.value;
     });
 
-    calculateInvestment();
+    calculateBtn.addEventListener("click", generateSteps);
+    resetBtn.addEventListener("click", () => {
+        invInput.value = "1";
+        stepInput.value = "5";
+        percentageInput.value = "85";
+        resultSteps.innerHTML = "";
+        totalInvestment.innerHTML = "";
+        estimatedProfit.innerHTML = "";
+    });
+
+    generateSteps();
 });

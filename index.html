@@ -4,41 +4,40 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style.css">
     <title>Money Manager</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <!-- Password Popup -->
+    <!-- Password Authentication Popup -->
     <div class="password-popup">
         <div class="popup-box">
             <img src="logo.png" alt="Logo" class="logo">
             <h2>Enter Password</h2>
-            <input type="password" id="password-input" placeholder="Enter password">
-            <button id="submit-password">Unlock</button>
-            <p id="error-message"></p>
+            <input type="password" id="password-input" placeholder="Enter Password">
+            <button id="unlock-btn">Unlock</button>
+            <p id="error-msg"></p>
         </div>
     </div>
 
-    <div class="outer__wrapper">
-        <div class="card__wrapper">
+    <!-- Main Content -->
+    <div class="main-container">
+        <div class="card">
             <img src="logo.png" alt="Logo" class="site-logo">
-            <h1 class="title">Money Management</h1>
-            <p class="sub__title">(@feiugum)</p>
+            <h1>Money Management</h1>
 
-            <div class="input__group">
+            <div class="input-group">
                 <label>First Step ($):</label>
-                <input type="number" placeholder="Amount" class="inv__entry" value="1">
+                <input type="number" id="initial-investment" value="1">
             </div>
 
-            <div class="input__group">
-                <label>Steps:</label>
-                <input type="number" placeholder="Steps (Max: 100)" class="steps__entry" value="5" min="1" max="100">
+            <div class="input-group">
+                <label>Steps (Max: 100):</label>
+                <input type="number" id="step-count" value="5" min="1" max="100">
             </div>
 
-            <div class="input__group">
+            <div class="input-group">
                 <label>Suggested Steps:</label>
-                <select class="step__suggestions">
+                <select id="step-suggestions">
                     <option value="5">Beginner (5 Steps)</option>
                     <option value="10">Intermediate (10 Steps)</option>
                     <option value="20">Advanced (20 Steps)</option>
@@ -47,25 +46,25 @@
                 </select>
             </div>
 
-            <div class="input__group">
+            <div class="input-group">
                 <label>Percentage (%):</label>
-                <input type="number" value="85" class="percentage__entry">
+                <input type="number" id="percentage" value="85">
             </div>
 
             <div class="button-group">
-                <button id="generate-steps">Generate Steps</button>
-                <button id="reset-values">Reset</button>
+                <button id="calculate-btn">Generate Steps</button>
+                <button id="reset-btn">Reset</button>
             </div>
 
-            <div class="result__container">
+            <div class="result-container">
                 <h3>Possible Steps:</h3>
-                <div class="result__vals"></div>
-                <p class="total"></p>
-                <p class="profit"></p>
+                <div id="result-steps"></div>
+                <p id="total-investment"></p>
+                <p id="estimated-profit"></p>
             </div>
         </div>
     </div>
 
-    <script src="./script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
