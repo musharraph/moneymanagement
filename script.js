@@ -1,12 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Password Authentication
     const passwordPopup = document.querySelector(".password-popup");
     const passwordInput = document.querySelector("#password-input");
     const unlockBtn = document.querySelector("#unlock-btn");
     const errorMsg = document.querySelector("#error-msg");
     const mainContainer = document.querySelector(".main-container");
 
-    const PASSWORD = "1234";  // Change this to set your own password
+    const PASSWORD = "1234";  
 
     unlockBtn.addEventListener("click", () => {
         if (passwordInput.value === PASSWORD) {
@@ -21,7 +20,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (event.key === "Enter") unlockBtn.click();
     });
 
-    // Step Calculation
     const invInput = document.querySelector("#initial-investment");
     const stepInput = document.querySelector("#step-count");
     const percentageInput = document.querySelector("#percentage");
@@ -50,8 +48,8 @@ document.addEventListener("DOMContentLoaded", () => {
             values.push(Math.round(amount));
         }
 
-        totalInvestment.innerHTML = ` Total Investment: <strong>$${values.reduce((a, b) => a + b, 0)}</strong>`;
-        estimatedProfit.innerHTML = ` Estimated Profit: <strong>$${(inv * percentage).toFixed(2)}</strong>`;
+        totalInvestment.innerHTML = `💰 Total Investment: <strong>$${values.reduce((a, b) => a + b, 0)}</strong>`;
+        estimatedProfit.innerHTML = `📈 Estimated Profit: <strong>$${(inv * percentage).toFixed(2)}</strong>`;
 
         values.forEach(value => {
             let stepBubble = document.createElement("span");
