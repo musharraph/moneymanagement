@@ -1,73 +1,75 @@
-document.addEventListener("DOMContentLoaded", () => {
-    // Lock Screen Elements
-    const passwordPopup = document.querySelector(".password-modal");
-    const passwordInput = document.querySelector("#password");
-    const unlockBtn = document.querySelector("#unlock");
-    const errorMsg = document.querySelector("#password-error");
-    const mainContainer = document.querySelector(".main-container");
+function calculateInvestment() {
+    let totalMoney = parseFloat(document.getElementById("totalMoney").value);
+    let steps = parseInt(document.getElementById("steps").value);
+    let mode = document.getElementById("mode").value;
+    let tableBody = document.querySelector("#investmentTable tbody");
     
-    const PASSWORD = "1234"; // Set your desired password
-
-    // Unlock Functionality
-    unlockBtn.addEventListener("click", () => {
-        if (passwordInput.value === PASSWORD) {
-            passwordPopup.style.display = "none";
-            mainContainer.style.display = "flex";
-        } else {
-            errorMsg.textContent = "❌ Incorrect password. Try again.";
-            errorMsg.style.color = "red";
-        }
-    });
-
-    passwordInput.addEventListener("keypress", (event) => {
-        if (event.key === "Enter") unlockBtn.click();
-    });
-
-    // Investment Calculation Elements
-    const invInput = document.querySelector("#initial-investment");
-    const stepInput = document.querySelector("#step-count");
-    const percentageInput = document.querySelector("#percentage");
-    const resultSteps = document.querySelector("#step-results");
-    const totalInvestment = document.querySelector("#total-investment");
-    const estimatedProfit = document.querySelector("#estimated-profit");
-    const calculateBtn = document.querySelector("#calculate");
-    const resetBtn = document.querySelector("#reset");
-
-    function generateSteps() {
-        let inv = Number(invInput.value);
-        let steps = Math.min(Number(stepInput.value), 100);
-        let percentage = Number(percentageInput.value) / 100;
-        
-        resultSteps.innerHTML = "";
-        let values = [];
-        let totalInvested = 0;
-
-        for (let i = 0; i < steps; i++) {
-            let amount = inv * Math.pow(1 + (1 / percentage), i);
-            amount = Math.round(amount);
-            values.push(amount);
-            totalInvested += amount;
-        }
-
-        totalInvestment.innerHTML = `💰 Total Investment: <strong>$${totalInvested}</strong>`;
-        estimatedProfit.innerHTML = `📈 Estimated Profit: <strong>$${(inv * percentage * steps).toFixed(2)}</strong>`;
-
-        values.forEach(value => {
-            let stepBubble = document.createElement("span");
-            stepBubble.classList.add("step-bubble");
-            stepBubble.textContent = value;
-            resultSteps.appendChild(stepBubble);
-        });
+    if (isNaN(totalMoney) || totalMoney <= 0) {
+        alert("Please enter a valid investment amount.");
+        return;
     }
 
-    calculateBtn.addEventListener("click", generateSteps);
+    tableBody.innerHTML = "";
+    
+    let investments = [];
+    let profits = [];
+    let totalProfit = 0;
+    
+    for (let i = 1; i <= steps; i++) {
+        let investedAmount;
+        if (mode === "auto") {
+            investedAmount = (totalMoney / steps).toFixed(2);
+        } else {
+            investedAmount = prompt(`Enter amount for Step ${i}:`, (totalMoney / steps).toFixed(2));
+            investedAmount = parseFloat(investedAmount);
+        }
+        
+        let profitLoss = getRandomProfitLoss(investedAmount);
+        investments.push(investedAmount);
+        profits.push(profitLoss);
+        totalProfit += profitLoss;
 
-    resetBtn.addEventListener("click", () => {
-        invInput.value = "1";
-        stepInput.value = "5";
-        percentageInput.value = "85";
-        resultSteps.innerHTML = "";
-        totalInvestment.innerHTML = "";
-        estimatedProfit.innerHTML = "";
+        let row = `<tr>
+            <td>Step ${i}</td>
+            <td>USD ${investedAmount}</td>
+            <td style="color:${profitLoss >= 0 ? 'lightgreen' : 'red'}">USD ${profitLoss}</td>
+        </tr>`;
+        
+        tableBody.innerHTML += row;
+    }
+
+    document.getElementById("maxProfitLoss").innerText = `Total Profit/Loss:USD ${totalProfit}`;
+
+    updateGraph(investments, profits);
+}
+
+function getRandomProfitLoss(amount) {
+    let riskFactor = Math.random();
+    let profit = (amount * (0.05 + riskFactor * 0.15)).toFixed(2);
+    let loss = (amount * (0.02 + riskFactor * 0.1)).toFixed(2);
+    return Math.random() > 0.5 ? parseFloat(profit) : -parseFloat(loss);
+}
+
+function updateGraph(investments, profits) {
+    let ctx = document.getElementById("profitChart").getContext("2d");
+    
+    if (window.profitChartInstance) {
+        window.profitChartInstance.destroy();
+    }
+
+    window.profitChartInstance = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: investments.map((_, i) => `Step ${i + 1}`),
+            datasets: [
+                {
+                    label: "Profit/Loss",
+                    data: profits,
+                    backgroundColor: "rgba(0, 255, 0, 0.2)",
+                    borderColor: "green",
+                    borderWidth: 2
+                }
+            ]
+        }
     });
-});
+}

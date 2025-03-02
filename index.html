@@ -3,69 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Money Manager</title>
+    <title>Trading Money Manager</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js" defer></script>
 </head>
 <body>
-    <!-- Background Video -->
-    <div class="video-container">
-        <video autoplay loop muted>
+    <div class="background">
+        <video autoplay muted loop>
             <source src="background.mp4" type="video/mp4">
-            Your browser does not support the video tag.
         </video>
     </div>
-
-    <!-- Password Modal -->
-    <div class="password-modal">
-        <div class="password-modal-content">
-            <img src="logo.png" alt="Logo" class="modal-logo">
-            <h2>Enter Password</h2>
-            <input type="password" id="password" placeholder="Enter Password">
-            <button id="unlock">Unlock</button>
-            <p id="password-error" class="error-message"></p>
-        </div>
-    </div>
-
-    <!-- Main Content -->
-    <main class="main-container" style="display: none;">
-        <div class="calculator-card">
-            <img src="logo.png" alt="Logo" class="app-logo">
-            <h2 class="heading2">Money Management</h2>
-            <h5 class="subtitle">@Yousaf_Quotex_Trader</h5>
-            <h3 class="subtitle2">Smart Investment Growth Tracker</h3>
-            
-            
-            <form id="calculator-form">
-                <div class="form-group">
-                    <label for="initial-investment">Initial Investment ($):</label>
-                    <input type="number" id="initial-investment" value="1" min="1">
-                </div>
-                
-                <div class="form-group">
-                    <label for="step-count">Steps (1-100):</label>
-                    <input type="number" id="step-count" value="5" min="1" max="100">
-                </div>
-                
-                <div class="form-group">
-                    <label for="percentage">Growth Rate (%):</label>
-                    <input type="number" id="percentage" value="85" min="1" max="100">
-                </div>
-                
-                <div class="form-actions">
-                    <button type="button" id="calculate">Generate Steps</button>
-                    <button type="reset" id="reset">Reset</button>
-                </div>
-            </form>
-            
-            <div class="result-section">
-                <h3>Investment Growth:</h3>
-                <div id="step-results" class="step-results"></div>
-                <p id="total-investment"></p>
-                <p id="estimated-profit"></p>
-            </div>
-        </div>
-    </main>
     
-    <script src="script.js"></script>
+    <div class="container">
+        <header>
+            <img src="logo.png" alt="Logo" class="logo">
+            <h1>Trading Money Manager</h1>
+        </header>
+
+        <div class="input-section">
+            <label for="totalMoney">Total Investment (USD):</label>
+            <input type="number" id="totalMoney" placeholder="Enter amount">
+            
+            <label for="steps">Trading Steps:</label>
+            <select id="steps">
+                <option value="3">3 Steps</option>
+                <option value="5">5 Steps</option>
+                <option value="7">7 Steps</option>
+            </select>
+
+            <label for="mode">Mode:</label>
+            <select id="mode">
+                <option value="auto">Auto</option>
+                <option value="manual">Manual</option>
+            </select>
+
+            <button onclick="calculateInvestment()">Calculate</button>
+        </div>
+
+        <div class="result-section">
+            <h2>Investment Breakdown</h2>
+            <table id="investmentTable">
+                <thead>
+                    <tr>
+                        <th>Step</th>
+                        <th>Invested Amount</th>
+                        <th>Profit/Loss</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            
+            <h3 id="maxProfitLoss"></h3>
+        </div>
+
+        <div class="graph">
+            <canvas id="profitChart"></canvas>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 Trading Money Manager</p>
+        </footer>
+    </div>
 </body>
 </html>
