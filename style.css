@@ -1,11 +1,32 @@
+/* General Styles */
 body {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #1e1e2f, #252547);
+    background: #000;
+    color: #fff;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     margin: 0;
+    overflow: hidden;
+}
+
+/* Background Video */
+.video-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
 }
 
 /* Password Modal */
@@ -15,15 +36,14 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.7);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
 }
 
 .password-modal-content {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.8);
     padding: 30px;
     border-radius: 15px;
     text-align: center;
@@ -31,7 +51,7 @@ body {
     width: 300px;
 }
 
-.modal-logo, .app-logo {
+.modal-logo {
     width: 80px;
     margin-bottom: 20px;
 }
@@ -44,6 +64,8 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: relative;
+    z-index: 10;
 }
 
 .main-container.visible {
@@ -52,23 +74,19 @@ body {
 }
 
 .calculator-card {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.8);
     padding: 30px;
     border-radius: 15px;
     backdrop-filter: blur(10px);
     width: 350px;
+    text-align: center;
 }
 
-/* Form Styling */
-.form-group {
-    margin-bottom: 15px;
-    text-align: left;
-}
-
+/* Vibrant Form Styles */
 label {
     display: block;
     margin-bottom: 5px;
-    color: #fff;
+    color: #ffcc00;
 }
 
 input, select {
@@ -80,15 +98,9 @@ input, select {
     color: #fff;
 }
 
-/* Button Styling */
-.form-actions {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-}
-
+/* Vibrant Button Styling */
 button {
-    background: #ff9800;
+    background: linear-gradient(45deg, #ff00ff, #ffcc00);
     color: white;
     border: none;
     padding: 12px 20px;
@@ -96,32 +108,28 @@ button {
     border-radius: 5px;
     flex: 1;
     margin: 0 5px;
+    transition: transform 0.2s;
 }
 
 button:hover {
-    background: #e68900;
+    transform: scale(1.05);
 }
 
 /* Result Styling */
 .result-section {
     margin-top: 20px;
     text-align: center;
-}
-
-.step-results {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 10px;
+    color: #ffcc00;
 }
 
 .step-results span {
-    background: #ff9800;
+    background: linear-gradient(45deg, #00ffff, #ff00ff);
     color: white;
     padding: 8px 15px;
     border-radius: 20px;
     margin: 5px;
     display: inline-block;
+    font-weight: bold;
 }
 
 .error-message {
