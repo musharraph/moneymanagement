@@ -11,10 +11,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (passwordInput.value.trim() === PASSWORD) {
             passwordModal.style.display = "none";
             mainContainer.classList.add("visible");
-            mainContainer.style.display = "flex"; // Ensure visibility
+            mainContainer.style.display = "flex";
         } else {
             passwordError.textContent = "Incorrect password. Try again.";
-            passwordError.style.color = "red";
         }
     });
 
@@ -22,10 +21,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (event.key === "Enter") unlockButton.click();
     });
 
-    // Handle form actions
+    // Form calculations
     const invInput = document.querySelector("#initial-investment");
     const stepInput = document.querySelector("#step-count");
-    const stepSuggestions = document.querySelector("#step-suggestions");
     const percentageInput = document.querySelector("#percentage");
     const calculateBtn = document.querySelector("#calculate");
     const resetBtn = document.querySelector("#reset");
