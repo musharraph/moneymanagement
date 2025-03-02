@@ -7,6 +7,16 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <!-- Background Video -->
+    <div class="video-container">
+        <video autoplay loop muted>
+            <source src="background.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <!-- Password Modal -->
     <div class="password-modal">
         <div class="password-modal-content">
             <img src="logo.png" alt="Logo" class="modal-logo">
@@ -17,6 +27,7 @@
         </div>
     </div>
 
+    <!-- Main Content -->
     <main class="main-container">
         <div class="calculator-card">
             <img src="logo.png" alt="Logo" class="app-logo">
@@ -31,17 +42,6 @@
                 <div class="form-group">
                     <label for="step-count">Steps (Max: 100):</label>
                     <input type="number" id="step-count" value="5" min="1" max="100">
-                </div>
-
-                <div class="form-group">
-                    <label for="step-suggestions">Suggested Steps:</label>
-                    <select id="step-suggestions">
-                        <option value="5">Beginner (5 Steps)</option>
-                        <option value="10">Intermediate (10 Steps)</option>
-                        <option value="20">Advanced (20 Steps)</option>
-                        <option value="50">Expert (50 Steps)</option>
-                        <option value="100">Max (100 Steps)</option>
-                    </select>
                 </div>
 
                 <div class="form-group">
