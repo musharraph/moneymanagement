@@ -1,46 +1,56 @@
 function calculateInvestment() {
-    let totalMoney = parseFloat(document.getElementById("totalMoney").value);
-    if (isNaN(totalMoney) || totalMoney <= 0) {
-        alert("Please enter a valid investment amount.");
-        return;
-    }
+    let totalMoney = parseFloat($("#totalMoney").val());
+    let userSteps = parseInt($("#steps").val());
+    let steps = isNaN(userSteps) || userSteps <= 0 ? autoBestSteps(totalMoney) : userSteps;
 
-    // Determine steps based on investment amount
-    let steps;
-    if (totalMoney <= 100) steps = getRandomInt(3, 5);
-    else if (totalMoney <= 500) steps = getRandomInt(5, 7);
-    else steps = getRandomInt(7, 10);
+    $("#steps").attr("placeholder", userSteps > 0 ? userSteps : "Best Possible");
 
     let remainingMoney = totalMoney;
     let investmentData = [];
     let totalProfit = 0;
+    let lossCount = 0;
+    let winCount = 0;
+    let lossPositions = generateLossPositions(steps);
 
     for (let i = 1; i <= steps; i++) {
-        let investAmount = remainingMoney * getRandomFloat(0.2, 0.5); // Invest 20-50% of remaining amount
+        let investAmount = remainingMoney * getRandomFloat(0.2, 0.4);
         remainingMoney -= investAmount;
 
-        let profitLoss = investAmount * getRandomFloat(-0.1, 0.3); // Loss (up to -10%) or profit (up to +30%)
+        let win = !lossPositions.includes(i);
+        let profitLoss = win ? investAmount * 0.8 : -investAmount;
         totalProfit += profitLoss;
 
-        investmentData.push({ step: i, invest: investAmount, profitLoss: profitLoss });
+        if (win) winCount++;
+        else lossCount++;
+
+        investmentData.push({ step: i, invest: investAmount, profitLoss: profitLoss, win });
     }
 
-    // Adjust last step to ensure total profit
-    let lastStep = investmentData[investmentData.length - 1];
-    lastStep.profitLoss += Math.max(0, totalMoney * 0.1 - totalProfit); // Ensure at least 10% profit
-
-    // Display results
     displayResults(investmentData, totalMoney);
 }
 
+function autoBestSteps(totalMoney) {
+    if (totalMoney <= 100) return getRandomInt(4, 6);
+    if (totalMoney <= 500) return getRandomInt(6, 8);
+    return getRandomInt(8, 10);
+}
+
+function generateLossPositions(totalSteps) {
+    let lossPositions = new Set();
+    while (lossPositions.size < 2) {
+        lossPositions.add(getRandomInt(1, totalSteps));
+    }
+    return [...lossPositions];
+}
+
 function displayResults(investmentData, totalMoney) {
-    let tableBody = document.querySelector("#investmentTable tbody");
-    tableBody.innerHTML = ""; // Clear previous data
+    let tableBody = $("#investmentTable tbody");
+    tableBody.html("");
 
     let totalInvested = 0, totalProfit = 0;
     let profitTrend = [];
 
-    investmentData.forEach(({ step, invest, profitLoss }) => {
+    investmentData.forEach(({ step, invest, profitLoss, win }) => {
         totalInvested += invest;
         totalProfit += profitLoss;
         profitTrend.push(totalProfit);
@@ -48,20 +58,23 @@ function displayResults(investmentData, totalMoney) {
         let row = `<tr>
             <td>Step ${step}</td>
             <td>$${invest.toFixed(2)}</td>
-            <td class="${profitLoss >= 0 ? 'profit' : 'loss'}">$${profitLoss.toFixed(2)}</td>
+            <td class="${profitLoss >= 0 ? 'profit' : 'loss'}">
+                ${win ? "✅" : "❌"} $${profitLoss.toFixed(2)}
+            </td>
         </tr>`;
-        tableBody.innerHTML += row;
+        tableBody.append(row);
     });
 
-    let maxProfitLossText = `Total Investment: $${totalMoney.toFixed(2)} | Final Amount: $${(totalMoney + totalProfit).toFixed(2)} | Profit: $${totalProfit.toFixed(2)}`;
-    document.getElementById("maxProfitLoss").textContent = maxProfitLossText;
+    let finalAmount = totalMoney + totalProfit;
+    let maxProfitLossText = `Total Investment: $${totalMoney.toFixed(2)} | Final Amount: $${finalAmount.toFixed(2)} | Profit: $${totalProfit.toFixed(2)}`;
+    $("#maxProfitLoss").text(maxProfitLossText);
 
     renderGraph(profitTrend);
 }
 
 function renderGraph(profitTrend) {
     let ctx = document.getElementById("profitChart").getContext("2d");
-    if (window.myChart) window.myChart.destroy(); // Destroy previous chart
+    if (window.myChart) window.myChart.destroy();
 
     window.myChart = new Chart(ctx, {
         type: "line",
@@ -70,7 +83,7 @@ function renderGraph(profitTrend) {
             datasets: [{
                 label: "Cumulative Profit",
                 data: profitTrend,
-                borderColor: "green",
+                borderColor: "yellow",
                 fill: false
             }]
         },
@@ -78,7 +91,6 @@ function renderGraph(profitTrend) {
     });
 }
 
-// Utility functions
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -86,3 +98,4 @@ function getRandomInt(min, max) {
 function getRandomFloat(min, max) {
     return (Math.random() * (max - min) + min).toFixed(2);
 }
+

@@ -3,67 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trading Money Manager</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="script.js" defer></script>
+    <title>Trading Investment Simulator</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Background Video Styling */
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            z-index: -1;
+        }
+        
+        #bgVideo {
+            width: 100%;
+            height: 100vh;
+            object-fit: cover;
+        }
+        
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Logo Styling */
+        .logo {
+            max-width: 150px;
+            height: auto;
+        }
+        
+        /* Container Styling */
+        .container {
+            position: relative;
+            z-index: 1;
+            color: white;
+            text-align: center;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+        }
+        
+        /* Table Styling */
+        .table {
+            background: white;
+        }
+        
+    </style>
 </head>
 <body>
-    <div class="background">
-        <video autoplay muted loop>
+    <!-- Background Video -->
+    <div class="video-container">
+        <video autoplay loop muted id="bgVideo">
             <source src="background.mp4" type="video/mp4">
         </video>
+        <div class="overlay"></div>
     </div>
-    
-    <div class="container">
-        <header>
-            <img src="logo.png" alt="Logo" class="logo">
-            <h1>Trading Money Manager</h1>
-        </header>
 
-        <div class="input-section">
-            <label for="totalMoney">Total Investment (USD):</label>
-            <input type="number" id="totalMoney" placeholder="Enter amount">
-            
-            <label for="steps">Trading Steps:</label>
-            <select id="steps">
-                <option value="3">3 Steps</option>
-                <option value="5">5 Steps</option>
-                <option value="7">7 Steps</option>
-            </select>
-
-            <label for="mode">Mode:</label>
-            <select id="mode">
-                <option value="auto">Auto</option>
-                <option value="manual">Manual</option>
-            </select>
-
-            <button onclick="calculateInvestment()">Calculate</button>
+    <div class="container mt-5 text-center">
+        <img src="logo.png" alt="Trading Logo" class="logo mb-3">
+        <h1 class="mb-4">Trading Money Management</h1>
+        <h4 class="mb-4">Best AI Based Strategy</h4>
+        <div class="card p-4">
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="totalMoney">Total Investment ($)</label>
+                    <input type="number" id="totalMoney" class="form-control" placeholder="Enter Amount">
+                </div>
+                <div class="col-md-4">
+                    <label for="steps">Trading Steps</label>
+                    <input type="number" id="steps" class="form-control" placeholder="Best Possible">
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                    <button class="btn btn-success w-100" onclick="calculateInvestment()">Start Trading</button>
+                </div>
+            </div>
         </div>
 
-        <div class="result-section">
-            <h2>Investment Breakdown</h2>
-            <table id="investmentTable">
-                <thead>
+        <h4 class="mt-4" id="maxProfitLoss"></h4>
+
+        <div class="table-responsive mt-4">
+            <table class="table table-bordered text-center" id="investmentTable">
+                <thead class="table-dark">
                     <tr>
                         <th>Step</th>
-                        <th>Invested Amount</th>
-                        <th>Profit/Loss</th>
+                        <th>Invested ($)</th>
+                        <th>Profit/Loss ($)</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
             </table>
-            
-            <h3 id="maxProfitLoss"></h3>
         </div>
 
-        <div class="graph">
-            <canvas id="profitChart"></canvas>
-        </div>
-
-        <footer>
-            <p>&copy; 2025 Trading Money Manager</p>
-        </footer>
+        <canvas id="profitChart" class="mt-4"></canvas>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
