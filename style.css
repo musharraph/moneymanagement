@@ -3,11 +3,11 @@ body {
     font-family: 'Poppins', sans-serif;
     background: #000;
     color: #fff;
+    margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    margin: 0;
+    height: 100vh;
     overflow: hidden;
 }
 
@@ -29,97 +29,118 @@ video {
     position: absolute;
 }
 
-/* Password Modal */
-.password-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.password-modal-content {
-    background: rgba(0, 0, 0, 0.8);
-    padding: 30px;
-    border-radius: 15px;
-    text-align: center;
-    backdrop-filter: blur(10px);
-    width: 300px;
-}
-
-.modal-logo {
-    width: 80px;
-    margin-bottom: 20px;
-}
-
-/* Main Container */
+/* Main Content */
 .main-container {
-    display: none;
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    width: 100%;
+    max-width: 350px;
+    padding: 20px;
+    display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    position: relative;
-    z-index: 10;
-}
-
-.main-container.visible {
-    display: flex;
-    opacity: 1;
-}
-
-.calculator-card {
-    background: rgba(0, 0, 0, 0.8);
-    padding: 30px;
+    max-height: 60vh;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.85);
     border-radius: 15px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(10px);
-    width: 350px;
+}
+
+/* Card Styling */
+.calculator-card {
+    width: 100%;
     text-align: center;
 }
 
-/* Vibrant Form Styles */
+.app-logo {
+    width: 80px;
+    height: auto;
+    margin-bottom: 1px;
+}
+.heading2{
+    margin-top: -10px;
+}
+.subtitle {
+    font-size: 0.7rem;
+    color: #ffcc00;
+    margin-bottom: 1px;
+    margin-top: -18px;
+}
+.subtitle2 {
+    font-size: 0.8rem;
+    color: #ffffff;
+    margin-bottom: 1px;
+    margin-top: -1px;
+}
+
 label {
     display: block;
     margin-bottom: 5px;
     color: #ffcc00;
 }
 
-input, select {
-    width: 100%;
+input {
+    width: 90%;
     padding: 10px;
     border: none;
     border-radius: 5px;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(41, 41, 41, 0.507);
     color: #fff;
+    font-size: 14px;
 }
 
-/* Vibrant Button Styling */
 button {
     background: linear-gradient(45deg, #ff00ff, #ffcc00);
     color: white;
     border: none;
-    padding: 12px 20px;
+    padding: 12px;
     cursor: pointer;
     border-radius: 5px;
-    flex: 1;
-    margin: 0 5px;
     transition: transform 0.2s;
+    width: 100%;
+    font-size: 16px;
+    margin-top: 10px;
 }
 
 button:hover {
     transform: scale(1.05);
 }
 
-/* Result Styling */
+.form-group, .form-actions {
+    width: 100%;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.form-actions button {
+    flex: 1;
+}
+
 .result-section {
     margin-top: 20px;
     text-align: center;
     color: #ffcc00;
+}
+
+.step-results {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    max-height: auto;
+    /* overflow-y: auto; */
+    padding: 10px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .step-results span {
@@ -127,12 +148,54 @@ button:hover {
     color: white;
     padding: 8px 15px;
     border-radius: 20px;
-    margin: 5px;
-    display: inline-block;
     font-weight: bold;
 }
 
-.error-message {
-    color: red;
-    margin-top: 10px;
+.password-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.password-modal-content {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.modal-logo {
+    width: 70px;
+    margin-bottom: 15px;
+}
+
+.password-modal input {
+    width: 90%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: rgba(31, 29, 29, 0.986);
+    color: #fff;
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.password-modal button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+}
+
+.password-modal button:hover {
+    background: linear-gradient(45deg, #ff1493, #ffa500);
 }

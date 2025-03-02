@@ -1,59 +1,73 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const passwordModal = document.querySelector(".password-modal");
+    // Lock Screen Elements
+    const passwordPopup = document.querySelector(".password-modal");
     const passwordInput = document.querySelector("#password");
-    const unlockButton = document.querySelector("#unlock");
-    const passwordError = document.querySelector("#password-error");
+    const unlockBtn = document.querySelector("#unlock");
+    const errorMsg = document.querySelector("#password-error");
     const mainContainer = document.querySelector(".main-container");
+    
+    const PASSWORD = "1234"; // Set your desired password
 
-    const PASSWORD = "1234";
-
-    unlockButton.addEventListener("click", () => {
-        if (passwordInput.value.trim() === PASSWORD) {
-            passwordModal.style.display = "none";
-            mainContainer.classList.add("visible");
+    // Unlock Functionality
+    unlockBtn.addEventListener("click", () => {
+        if (passwordInput.value === PASSWORD) {
+            passwordPopup.style.display = "none";
             mainContainer.style.display = "flex";
         } else {
-            passwordError.textContent = "Incorrect password. Try again.";
+            errorMsg.textContent = "❌ Incorrect password. Try again.";
+            errorMsg.style.color = "red";
         }
     });
 
     passwordInput.addEventListener("keypress", (event) => {
-        if (event.key === "Enter") unlockButton.click();
+        if (event.key === "Enter") unlockBtn.click();
     });
 
-    // Form calculations
+    // Investment Calculation Elements
     const invInput = document.querySelector("#initial-investment");
     const stepInput = document.querySelector("#step-count");
     const percentageInput = document.querySelector("#percentage");
-    const calculateBtn = document.querySelector("#calculate");
-    const resetBtn = document.querySelector("#reset");
-    const stepResults = document.querySelector("#step-results");
+    const resultSteps = document.querySelector("#step-results");
     const totalInvestment = document.querySelector("#total-investment");
     const estimatedProfit = document.querySelector("#estimated-profit");
+    const calculateBtn = document.querySelector("#calculate");
+    const resetBtn = document.querySelector("#reset");
 
-    calculateBtn.addEventListener("click", () => {
-        let investment = parseFloat(invInput.value);
-        let steps = parseInt(stepInput.value);
-        let percentage = parseFloat(percentageInput.value) / 100;
+    function generateSteps() {
+        let inv = Number(invInput.value);
+        let steps = Math.min(Number(stepInput.value), 100);
+        let percentage = Number(percentageInput.value) / 100;
         
-        stepResults.innerHTML = "";
-        let total = 0;
+        resultSteps.innerHTML = "";
+        let values = [];
+        let totalInvested = 0;
 
         for (let i = 0; i < steps; i++) {
-            investment *= (1 + percentage);
-            total += investment;
-            let span = document.createElement("span");
-            span.textContent = `$${investment.toFixed(2)}`;
-            stepResults.appendChild(span);
+            let amount = inv * Math.pow(1 + (1 / percentage), i);
+            amount = Math.round(amount);
+            values.push(amount);
+            totalInvested += amount;
         }
 
-        totalInvestment.textContent = `Total Investment: $${total.toFixed(2)}`;
-        estimatedProfit.textContent = `Estimated Profit: $${(total - invInput.value).toFixed(2)}`;
-    });
+        totalInvestment.innerHTML = `💰 Total Investment: <strong>$${totalInvested}</strong>`;
+        estimatedProfit.innerHTML = `📈 Estimated Profit: <strong>$${(inv * percentage * steps).toFixed(2)}</strong>`;
+
+        values.forEach(value => {
+            let stepBubble = document.createElement("span");
+            stepBubble.classList.add("step-bubble");
+            stepBubble.textContent = value;
+            resultSteps.appendChild(stepBubble);
+        });
+    }
+
+    calculateBtn.addEventListener("click", generateSteps);
 
     resetBtn.addEventListener("click", () => {
-        stepResults.innerHTML = "";
-        totalInvestment.textContent = "";
-        estimatedProfit.textContent = "";
+        invInput.value = "1";
+        stepInput.value = "5";
+        percentageInput.value = "85";
+        resultSteps.innerHTML = "";
+        totalInvestment.innerHTML = "";
+        estimatedProfit.innerHTML = "";
     });
 });
