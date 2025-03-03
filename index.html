@@ -1,114 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trading Investment Simulator</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        /* Background Video Styling */
-        .video-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            overflow: hidden;
-            z-index: -1;
-        }
-        
-        #bgVideo {
-            width: 100%;
-            height: 100vh;
-            object-fit: cover;
-        }
-        
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.5);
-        }
-        
-        /* Logo Styling */
-        .logo {
-            max-width: 150px;
-            height: auto;
-        }
-        
-        /* Container Styling */
-        .container {
-            position: relative;
-            z-index: 1;
-            color: white;
-            text-align: center;
-        }
-        
-        .card {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 10px;
-        }
-        
-        /* Table Styling */
-        .table {
-            background: white;
-        }
-        
-    </style>
+    <title>Money Management</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style2.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+
 <body>
-    <!-- Background Video -->
-    <div class="video-container">
-        <video autoplay loop muted id="bgVideo">
-            <source src="background.mp4" type="video/mp4">
-        </video>
-        <div class="overlay"></div>
+    <!-- Lock Screen -->
+    <div id="lockScreen" class="lock-screen">
+        <div class="lock-screen-content">
+            <img src="logo.png" alt="Logo" class="logo">
+            <h1>Enter Password</h1>
+            <input type="password" id="passwordInput" class="form-control" placeholder="Password">
+            <button id="unlockButton" class="btn btn-primary">Unlock</button>
+            <div id="incorrectPasswordMessage" class="incorrect-password-message">Incorrect password. Please try
+                again.</div>
+        </div>
     </div>
 
-    <div class="container mt-5 text-center">
-        <img src="logo.png" alt="Trading Logo" class="logo mb-3">
-        <h1 class="mb-4">Trading Money Management</h1>
-        <h4 class="mb-4">Best AI Based Strategy</h4>
-        <div class="card p-4">
-            <div class="row">
-                <div class="col-md-4">
-                    <label for="totalMoney">Total Investment ($)</label>
-                    <input type="number" id="totalMoney" class="form-control" placeholder="Enter Amount">
-                </div>
-                <div class="col-md-4">
-                    <label for="steps">Trading Steps</label>
-                    <input type="number" id="steps" class="form-control" placeholder="Best Possible">
-                </div>
-                <div class="col-md-4 d-flex align-items-end">
-                    <button class="btn btn-success w-100" onclick="calculateInvestment()">Start Trading</button>
+    <!-- Background Video -->
+    <video autoplay muted loop id="backgroundVideo">
+        <source src="background.mp4" type="video/mp4">
+        Your browser does not support HTML5 video.
+    </video>
+
+    <!-- Main Content -->
+    <div class="outer__wrapper" id="mainContent" style="display: none;">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card__wrapper">
+                        <div class="title">
+                            Money Management
+                        </div>
+                        <div class="sub__title">
+                            (@Yousaf_Quotex_Trader)
+                        </div>
+
+                        <div class="inv__container">
+                            <div class="mb-3">
+                                <label for="inv__entry" class="form-label inv__label">First Step ($):</label>
+                                <input type="number" class="form-control inv__entry" id="inv__entry"
+                                    placeholder="Enter amount" value="1">
+                            </div>
+                            <div class="mb-3">
+                                <label for="steps__entry" class="form-label steps__label">Steps:</label>
+                                <input type="number" class="form-control steps__entry" id="steps__entry"
+                                    placeholder="Enter steps" value="5">
+                            </div>
+                            <div class="mb-3">
+                                <label for="percentage__entry" class="form-label percentage__label">Percentage (%):</label>
+                                <input type="number" class="form-control percentage__entry" id="percentage__entry"
+                                    placeholder="Enter percentage" value="85">
+                            </div>
+                        </div>
+
+                        <div class="result__container">
+                            <div class="result__label">Possible Steps:</div>
+                            <div class="result__vals"></div>
+                        </div>
+
+                        <div class="total"></div>
+                        <div class="profit"></div>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <h4 class="mt-4" id="maxProfitLoss"></h4>
-
-        <div class="table-responsive mt-4">
-            <table class="table table-bordered text-center" id="investmentTable">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Step</th>
-                        <th>Invested ($)</th>
-                        <th>Profit/Loss ($)</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
-
-        <canvas id="profitChart" class="mt-4"></canvas>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="script.js"></script>
+    <!-- Custom JavaScript -->
+    <script src="script2.js"></script>
 </body>
+
 </html>
