@@ -1,66 +1,242 @@
-/* Background Video */
-#bgVideo {
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Roboto+Mono&display=swap');
+
+/* General Styles */
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    overflow: hidden;
+    /* Hide scrollbars */
+}
+
+/* Lock Screen Styles */
+.lock-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    /* Darkened background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    /* Ensure it's on top */
+    color: #fff;
+    /* White text */
+}
+
+.lock-screen-content {
+    text-align: center;
+}
+
+.logo {
+    width: 150px;
+    /* Adjust as needed */
+    margin-bottom: 20px;
+}
+
+.form-control {
+    margin-bottom: 15px;
+    border-radius: 5px;
+    padding: 10px;
+    border: 1px solid #444;
+    background-color: #222;
+    color: #fff;
+}
+
+.form-control::placeholder {
+    color: #888;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.incorrect-password-message {
+    color: red;
+    margin-top: 10px;
+}
+
+
+/* Background Video Styles */
+#backgroundVideo {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    z-index: -2;
+    z-index: -1;
 }
 
-/* Dark overlay to improve text readability */
-.overlay {
-    position: fixed;
+/* Outer Wrapper Styles */
+.outer__wrapper {
+    position: relative;
+    height: 100vh;
+    padding-top: 50px;
+    color: #fff;
+    /* Default text color */
+    overflow-y: auto;
+    /* Enable vertical scrolling */
+}
+
+.outer__wrapper::before {
+    content: '';
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6); /* Dark transparency */
+    background: rgba(0, 0, 0, 0.5);
+    /* Adjust for desired darkness */
     z-index: -1;
 }
 
-/* Logo Styling */
-.logo {
-    width: 120px;  /* Reduced size */
-    height: auto;
+
+/* Card Wrapper Styles */
+.card__wrapper {
+    background-color: rgba(34, 34, 34, 0.8);
+    /* Semi-transparent dark background */
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Subtle shadow */
+    backdrop-filter: blur(5px);
+    /* Glassmorphism effect */
+}
+
+/* Title Styles */
+.title {
+    padding-top: 20px;
+    font-size: 30px;
+    font-weight: bolder;
+    text-align: center;
+    font-family: 'Roboto Mono', monospace;
+    color: #00bcd4;
+    /* Neon accent color */
+    text-shadow: 0 0 10px #00bcd4;
+    /* Neon glow effect */
+}
+
+/* Sub Title Styles */
+.sub__title {
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    color: #eee;
+    /* Lighter text color */
+}
+
+/* Input Container Styles */
+.inv__container {
+    margin-top: 1.5rem;
+}
+
+.bx {
+    margin-bottom: 1rem;
+}
+
+/* Input Field Styles */
+.inv__entry,
+.steps__entry,
+.percentage__entry {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #444;
+    background-color: #222;
+    color: #fff;
+    width: 100%;
+    /* Ensure full width */
+    outline: none;
+}
+
+.inv__entry:focus,
+.steps__entry:focus,
+.percentage__entry:focus {
+    border-color: #00bcd4;
+    /* Highlight on focus */
+    box-shadow: 0 0 5px #00bcd4;
+    /* Neon glow on focus */
+}
+
+/* Label Styles */
+.steps__label,
+.inv__label,
+.percentage__label,
+.result__label {
+    color: #eee;
+    font-weight: 600;
     display: block;
-    margin: 0 auto;
+    /* Ensure labels are on their own line */
+    margin-bottom: 5px;
 }
 
-/* Text and Card Improvements */
-h1 {
+/* Result Container Styles */
+.result__container {
+    margin-top: 2rem;
+}
+
+/* Result Values Styles */
+.result__vals {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    /* Space between result items */
+}
+
+.result__vals span {
+    width: auto;
+    min-width: 40px;
+    height: 40px;
+    padding-inline: 15px;
+    background: #00bcd4;
+    color: #222;
+    /* Dark text color */
+    border-radius: 50px;
+    text-align: center;
+    line-height: 40px;
     font-weight: bold;
-    color: #ffc107;
-    text-shadow: 2px 2px 4px black;
+    box-shadow: 0 0 5px #00bcd4;
+    /* Neon glow effect */
 }
 
-.card {
-    background-color: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.3);
-    border-radius: 10px;
-}
-
-/* Table Styling */
-.table th, .table td {
-    vertical-align: middle;
-    color: white;
-}
-
+/* Total and Profit Styles */
+.total,
 .profit {
-    color: #28a745;
-    font-weight: bold;
+    text-align: center;
+    margin-top: 1rem;
+    font-weight: 600;
+    color: #00bcd4;
+    /* Neon accent color */
 }
 
-.loss {
-    color: #dc3545;
-    font-weight: bold;
+/* Media Queries for Responsiveness */
+@media (min-width: 500px) {
+    .card__wrapper {
+        width: 600px;
+    }
 }
 
-/* Chart and Table Resizing */
-canvas {
-    max-width: 100%;
-    height: auto;
-}
+@media (max-width: 768px) {
+    .card__wrapper {
+        width: 90%;
+        /* Adjust card width for smaller screens */
+    }
 
+    .title {
+        font-size: 24px;
+        /* Smaller title for smaller screens */
+    }
+}
