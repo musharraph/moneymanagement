@@ -1,101 +1,73 @@
-function calculateInvestment() {
-    let totalMoney = parseFloat($("#totalMoney").val());
-    let userSteps = parseInt($("#steps").val());
-    let steps = isNaN(userSteps) || userSteps <= 0 ? autoBestSteps(totalMoney) : userSteps;
+var inv__entry = document.querySelector(".inv__entry")
+var steps__entry = document.querySelector(".steps__entry")
+var percentage__entry = document.querySelector(".percentage__entry")
+var result = document.querySelector(".result__vals")
+var totalElement = document.querySelector(".total")
+var profitElement = document.querySelector(".profit")
 
-    $("#steps").attr("placeholder", userSteps > 0 ? userSteps : "Best Possible");
+const password = "123"; // Replace with your desired password
+const lockScreen = document.getElementById("lockScreen");
+const mainContent = document.getElementById("mainContent");
+const passwordInput = document.getElementById("passwordInput");
+const unlockButton = document.getElementById("unlockButton");
+const incorrectPasswordMessage = document.getElementById("incorrectPasswordMessage");
 
-    let remainingMoney = totalMoney;
-    let investmentData = [];
-    let totalProfit = 0;
-    let lossCount = 0;
-    let winCount = 0;
-    let lossPositions = generateLossPositions(steps);
+// Function to unlock the screen
+function unlockScreen() {
+    const enteredPassword = passwordInput.value;
+    if (enteredPassword === password) {
+        lockScreen.style.display = "none";
+        mainContent.style.display = "block";
+        incorrectPasswordMessage.style.display = "none"; // Hide error message
+    } else {
+        incorrectPasswordMessage.style.display = "block"; // Show error message
+    }
+}
 
-    for (let i = 1; i <= steps; i++) {
-        let investAmount = remainingMoney * getRandomFloat(0.2, 0.4);
-        remainingMoney -= investAmount;
+// Add event listener to the unlock button
+unlockButton.addEventListener("click", unlockScreen);
 
-        let win = !lossPositions.includes(i);
-        let profitLoss = win ? investAmount * 0.8 : -investAmount;
-        totalProfit += profitLoss;
+// Add event listener to the password input for "Enter" key press
+passwordInput.addEventListener("keyup", function (event) {
+    if (event.key === "Enter") {
+        unlockScreen();
+    }
+});
 
-        if (win) winCount++;
-        else lossCount++;
+// Function to calculate and display the results
+var MAIN__FUNCTION = _ => {
+    var inv = Number(inv__entry.value)
+    var steps = Number(steps__entry.value)
+    var percentage = Number(percentage__entry.value) / 100
 
-        investmentData.push({ step: i, invest: investAmount, profitLoss: profitLoss, win });
+    result.innerHTML = ""
+
+    var vals = []
+
+    for (let i = 0; i < steps; i++) {
+        var formula = inv * (1 + (1 / percentage)) ** i;
+        vals.push(Math.round(formula))
     }
 
-    displayResults(investmentData, totalMoney);
-}
+    // Calculate total investment and profit
+    const totalInvestment = vals.reduce((a, b) => a + b, 0);
+    const profitPerSession = inv * percentage;
 
-function autoBestSteps(totalMoney) {
-    if (totalMoney <= 100) return getRandomInt(4, 6);
-    if (totalMoney <= 500) return getRandomInt(6, 8);
-    return getRandomInt(8, 10);
-}
+    // Update the HTML with the calculated values
+    totalElement.innerHTML = "INVESTMENT: $" + totalInvestment.toFixed(2);
+    profitElement.innerHTML = "≈ PROFIT/SESSION: $" + profitPerSession.toFixed(2);
 
-function generateLossPositions(totalSteps) {
-    let lossPositions = new Set();
-    while (lossPositions.size < 2) {
-        lossPositions.add(getRandomInt(1, totalSteps));
-    }
-    return [...lossPositions];
-}
-
-function displayResults(investmentData, totalMoney) {
-    let tableBody = $("#investmentTable tbody");
-    tableBody.html("");
-
-    let totalInvested = 0, totalProfit = 0;
-    let profitTrend = [];
-
-    investmentData.forEach(({ step, invest, profitLoss, win }) => {
-        totalInvested += invest;
-        totalProfit += profitLoss;
-        profitTrend.push(totalProfit);
-
-        let row = `<tr>
-            <td>Step ${step}</td>
-            <td>$${invest.toFixed(2)}</td>
-            <td class="${profitLoss >= 0 ? 'profit' : 'loss'}">
-                ${win ? "✅" : "❌"} $${profitLoss.toFixed(2)}
-            </td>
-        </tr>`;
-        tableBody.append(row);
-    });
-
-    let finalAmount = totalMoney + totalProfit;
-    let maxProfitLossText = `Total Investment: $${totalMoney.toFixed(2)} | Final Amount: $${finalAmount.toFixed(2)} | Profit: $${totalProfit.toFixed(2)}`;
-    $("#maxProfitLoss").text(maxProfitLossText);
-
-    renderGraph(profitTrend);
-}
-
-function renderGraph(profitTrend) {
-    let ctx = document.getElementById("profitChart").getContext("2d");
-    if (window.myChart) window.myChart.destroy();
-
-    window.myChart = new Chart(ctx, {
-        type: "line",
-        data: {
-            labels: Array.from({ length: profitTrend.length }, (_, i) => `Step ${i + 1}`),
-            datasets: [{
-                label: "Cumulative Profit",
-                data: profitTrend,
-                borderColor: "yellow",
-                fill: false
-            }]
-        },
-        options: { responsive: true }
+    vals.forEach(j => {
+        const span = document.createElement("span");
+        span.textContent = j;
+        result.appendChild(span);
     });
 }
 
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+// Initial call to MAIN__FUNCTION
+MAIN__FUNCTION()
 
-function getRandomFloat(min, max) {
-    return (Math.random() * (max - min) + min).toFixed(2);
-}
-
+// Add event listeners to input fields to trigger the calculation
+inv__entry.onchange = _ => MAIN__FUNCTION()
+steps__entry.onchange = _ => MAIN__FUNCTION()
+percentage__entry.onchange = _ => MAIN__FUNCTION()
