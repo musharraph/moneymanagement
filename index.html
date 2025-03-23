@@ -1,103 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="https://www.thebalancemoney.com/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>YQT Money Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <title>Investment Calculator</title>
 </head>
-
-<body>
-        <!-- Password Screen -->
-    <div id="passwordScreen">
-        <div class="password-box">
-            <h2><i class="fas fa-lock"></i> Secure Access</h2>
-            <input type="password" id="passwordInput" placeholder="Enter Password" autocomplete="off">
-            <button id="passwordBtn">Submit <i class="fas fa-arrow-right"></i></button>
-            <p id="passwordError"></p>
-        </div>
-    </div>
-
-    
-    <div class="outer__wrapper">
-        <div class="card__wrapper">
-            <div class="header">
-                <div class="title">Investment Calculator</div>
-                <div class="sub__title"><i class="fas fa-chart-line"></i> Smart Money Management<br>@Yousaf_Quotex_Trader</div>
-            </div>
-
-            <div class="toggle__container">
-                <label class="switch">
-                    <input type="checkbox" id="mode-toggle">
-                    <span class="slider round"></span>
-                </label>
-                <span class="toggle__text">Total Investment Mode</span>
-            </div>
-
-            <div class="input__group total__inv__container" style="display: none;">
-                <div class="input__wrapper">
-                    <label class="total__inv__label">Total Investment ($)</label>
-                    <div class="input__field">
-                        <i class="fas fa-dollar-sign"></i>
-                        <input type="number" placeholder="Enter total amount" class="total__inv__entry" value="100">
+<body class="login-body">
+    <div class="container">
+        <div class="row vh-100 justify-content-center align-items-center">
+            <div class="col-md-5">
+                <div class="login-card">
+                    <div class="text-center mb-4">
+                        <h1 class="login-logo">Money<span>Management</span><small>Pro</small></h1>
+                        <p class="text-muted">Yousaf_Quotex_Trader</p>
                     </div>
-                </div>
-            </div>
-
-            <div class="input__group">
-                <div class="input__wrapper">
-                    <label class="inv__label">First Step ($)</label>
-                    <div class="input__field">
-                        <i class="fas fa-dollar-sign"></i>
-                        <input type="number" placeholder="Enter amount" class="inv__entry" value="1">
-                    </div>
-                </div>
-            </div>
-
-            <div class="input__group">
-                <div class="input__wrapper">
-                    <label class="steps__label">Number of Steps</label>
-                    <div class="input__field">
-                        <i class="fas fa-stairs"></i>
-                        <input type="number" placeholder="Enter steps" class="steps__entry" value="5">
-                    </div>
-                </div>
-            </div>
-
-            <div class="input__group">
-                <div class="input__wrapper">
-                    <label class="percentage__label">Percentage (%)</label>
-                    <div class="input__field">
-                        <i class="fas fa-percent"></i>
-                        <input type="number" value="85" class="percentage__entry">
-                    </div>
-                </div>
-            </div>
-
-            <div class="result__container">
-                <h3 class="result__title">Investment Steps</h3>
-                <div class="result__vals"></div>
-                
-                <div class="stats__container">
-                    <div class="stat__card total">
-                        <i class="fas fa-wallet"></i>
-                        <span class="stat__value">$0</span>
-                        <span class="stat__label">Total Investment</span>
-                    </div>
-                    <div class="stat__card profit">
-                        <i class="fas fa-chart-bar"></i>
-                        <span class="stat__value">$0</span>
-                        <span class="stat__label">Profit/Session</span>
+                    
+                    <div class="login-form">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" placeholder="Enter your username">
+                        </div>
+                        <div class="mb-4">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" placeholder="Enter your password">
+                        </div>
+                        <div id="login-error" class="alert alert-danger d-none">
+                            Invalid username or password
+                        </div>
+                        <button id="login-btn" class="btn btn-primary w-100 py-2">
+                            <span class="login-text">Login</span>
+                            <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                        </button>
+                        <div class="mt-3 text-center text-muted">
+                            <!-- <small>Username: admin | Password: password123</small> -->
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <script src="./script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="auth.js"></script>
+    <script src="news.js"></script>
 </body>
-
-</html>
+</html> 
