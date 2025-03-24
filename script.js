@@ -1,4 +1,4 @@
-// Password Validation
+/* Password Validation
 document.getElementById("passwordBtn").addEventListener("click", function () {
     let password = document.getElementById("passwordInput").value;
     let passwordScreen = document.getElementById("passwordScreen");
@@ -11,7 +11,7 @@ document.getElementById("passwordBtn").addEventListener("click", function () {
     } else {
         errorMsg.textContent = "Incorrect password! Try again.";
     }
-});
+}); */
 
 // Signal Button
 document.getElementById("getSignal").addEventListener("click", function () {
