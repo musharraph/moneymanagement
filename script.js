@@ -13,8 +13,8 @@ document.getElementById("passwordBtn").addEventListener("click", function () {
     }
 }); */
 
-// Signal Button
-document.getElementById("getSignal").addEventListener("click", function () {
+// Signal Button 
+/* document.getElementById("getSignal").addEventListener("click", function () {
     let button = document.getElementById("getSignal");
     let timerDisplay = document.getElementById("timer");
     let signalOutput = document.getElementById("signalOutput");
@@ -50,7 +50,7 @@ document.getElementById("getSignal").addEventListener("click", function () {
             }
         }, 1000);
     }, delay);
-});
+}); */
 var inv__entry = document.querySelector(".inv__entry")
 var steps__entry = document.querySelector(".steps__entry")
 var percentage__entry = document.querySelector(".percentage__entry")
